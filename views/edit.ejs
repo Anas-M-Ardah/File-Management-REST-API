@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit File - <%= fileName %></title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<header class="header">
+    <h1 class="header-title">Edit File</h1>
+</header>
+
+<main class="main-content">
+    <h2>Edit File: <%= fileName %></h2>
+
+    <form action="/edit?fileName=<%= fileName %>" method="POST">
+        <div class="form-group">
+            <label for="fileName">File Name</label>
+            <input type="text" id="fileName" name="fileName" value="<%= fileName %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="fileContent">File Content</label>
+            <textarea id="fileContent" name="fileContent" rows="10" required><%= fileContent %></textarea>
+        </div>
+
+        <button type="submit" class="submit-button">Save Changes</button>
+    </form>
+
+    <a href="/" class="back-button">Cancel</a>
+</main>
+
+</body>
+</html>

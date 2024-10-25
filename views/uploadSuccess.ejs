@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Successful</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script>
+        setTimeout(function() {
+            window.location.href = '/';
+        }, 6000);
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        h1 {
+            color: green;
+        }
+        li{
+            list-style-type: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Files uploaded successfully!</h1>
+    <p>Uploaded files:</p>
+    <ul>
+        <% for (const file of files) { %>
+            <li><%= file %></li>
+        <% } %>
+    </ul>
+    <p>You will be redirected to the home page in 6 seconds...</p>
+</body>
+</html>

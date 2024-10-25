@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+</head>
+<body>
+
+<header class="header">
+    <h1 class="header-title">File Upload</h1>
+</header>
+
+<main class="main-content">
+    <h2>Upload a File</h2>
+    
+    <form id="uploadForm">
+        <div class="form-group">
+            <label for="file">Choose file to upload:</label>
+            <input type="file" id="file" name="file" multiple>
+        </div>
+
+        <button type="button" class="submit-button" onclick="uploadNormal()">Upload</button>
+        <button type="button" class="submit-button" onclick="uploadCompressed()">Compress & Upload</button>
+    </form>
+</main>
+
+<script>
+    async function uploadNormal() {
+        const files = document.getElementById('file').files;
+        if (files.length === 0) {
+            alert('Please select at least one file to upload.');
+            return;
+        }
+
+        const formData = new FormData();
+        Array.from(files).forEach(file => formData.append('file', file));
+
+        try {
+            const response = await fetch('/upload', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (response.ok) {
+                alert('Files uploaded successfully!');
+                window.location.href = "/";
+            } else {
+                console.error('Upload failed:', response.statusText);
+                alert('Error uploading file.');
+            }
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            alert('Error uploading file.');
+        }
+    }
+
+    async function uploadCompressed() {
+        const files = document.getElementById('file').files;
+        if (files.length === 0) {
+            alert('Please select at least one file to upload.');
+            return;
+        }
+
+        const zip = new JSZip();
+        Array.from(files).forEach(file => zip.file(file.name, file));
+
+        try {
+            const compressedContent = await zip.generateAsync({ type: 'blob' });
+            const formData = new FormData();
+            formData.append('file', compressedContent, 'compressed_files.zip');
+
+            const response = await fetch('/upload', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (response.ok) {
+                alert('Files compressed and uploaded successfully!');
+                window.location.href = "/";
+            } else {
+                console.error('Upload failed:', response.statusText);
+                alert('Error uploading compressed file.');
+            }
+        } catch (error) {
+            console.error('Error compressing files:', error);
+            alert('Error compressing files.');
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="header">
+    <h1 class="header-title"><%= title %></h1>
+</header>
+<main class="main-content"> 
+    <h2 class="main-title">List of Files</h2>
+    <div class="search-container">
+        <input 
+            type="text" 
+            id="searchInput" 
+            class="search-input" 
+            placeholder="Search files..."
+        >
+        <button onclick="performSearch()" class="search-button">Search</button>
+    </div>
+    <table class="file-table">
+        <thead>
+            <tr>
+                <th class="file-table-header">File Name</th>
+                <th class="file-table-header">Action</th>
+            </tr>
+        </thead>
+        <tbody id="fileTable">
+            <% for (const file of files) { %>
+                <tr>
+                    <td class="file-table-data"><%= file.fileName %></td>
+                    <td class="file-table-data">
+                        <button onclick="window.location.href='/view?fileName=<%= file.fileName %>'" class="action-button">View</button>
+                        <button onclick="window.location.href='/edit?fileName=<%= file.fileName %>'" class="action-button">Edit</button>
+                        <button onclick="deleteFile('<%= file.fileName %>')" class="action-button">Delete</button>
+                        <button onclick="compressFile('<%= file.fileName %>')" class="action-button">Compress File</button>
+                        <button onclick="window.location.href='/download?fileName=<%= file.fileName %>'" class="action-button">Download</button>
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <button class="create-file-button" onclick="window.location.href='/create'">Create New File</button>
+    <button class="upload-file-button" onclick="window.location.href='/upload'">Upload File</button>
+</main>
+<script type="text/javascript" src="scripts.js"></script>
+</body>
+</html>

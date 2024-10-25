@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Details - <%= fileName %></title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<header class="header">
+    <h1 class="header-title">File Details</h1>
+</header>
+
+<main class="main-content">
+    <h2>File Name: <%= fileName %></h2>
+    
+    <div class="file-content-section">
+        <h3>File Content:</h3>
+        <pre class="file-content"><%= fileContent %></pre>
+    </div>
+
+    <a href="/" class="back-button">Back to File List</a>
+</main>
+
+</body>
+</html>
