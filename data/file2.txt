@@ -1,2 +1,0 @@
-Hello I'm file 2.
-What is your name?

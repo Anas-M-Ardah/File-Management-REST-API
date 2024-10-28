@@ -1,8 +1,8 @@
-import { readFile, writeFile, readdir, rename, unlink } from 'fs/promises';
-import { createReadStream, createWriteStream } from 'fs';
-import { pipeline } from 'stream/promises';
-import { createGzip } from 'zlib';
-import path from 'path';
+const { readFile, writeFile, readdir, rename, unlink } = require('fs/promises');
+const { createReadStream, createWriteStream } = require('fs');
+const { pipeline } = require('stream/promises');
+const { createGzip } = require('zlib');
+const path = require('path');
 
 /**
  * Reads the content of a file.
@@ -10,7 +10,7 @@ import path from 'path';
  * @returns {string} The content of the file as a string.
  * @throws Error if there is an error reading the file.
  */
-export async function readFromFile(filePath) {
+async function readFromFile(filePath) {
     // Try to read the file at the specified path
     try {
         const data = await readFile(filePath, 'utf8');
@@ -23,14 +23,13 @@ export async function readFromFile(filePath) {
     }
 }
 
-
 /**
  * Writes data to a file at the specified path.
  * @param {string} filePath - The path of the file where data will be written.
  * @param {string} data - The content to write to the file.
  * @throws Error if there is an error writing to the file.
  */
-export async function writeToFile(filePath, data) {
+async function writeToFile(filePath, data) {
     // Attempt to write data to the file
     try {
         await writeFile(filePath, data, 'utf8');
@@ -49,7 +48,7 @@ export async function writeToFile(filePath, data) {
  * @returns {Promise<Array<{fileName: string, content: string}>>} An array of objects, each containing the file name and content.
  * @throws Error if there is an error reading the directory or any file within it.
  */
-export async function readAllFiles(dirPath) {
+async function readAllFiles(dirPath) {
     try {
         // Read the directory to get a list of files
         const files = await readdir(dirPath);
@@ -86,7 +85,7 @@ export async function readAllFiles(dirPath) {
  *
  * @throws Error if there is an error renaming the file.
  */
-export async function renameFile(oldFilePath, newFilePath) {
+async function renameFile(oldFilePath, newFilePath) {
     try {
         // Attempt to rename the file
         await rename(oldFilePath, newFilePath);
@@ -104,7 +103,7 @@ export async function renameFile(oldFilePath, newFilePath) {
  * @param {string} filePath - The path of the file to be deleted.
  * @throws Error if there is an error deleting the file.
  */
-export async function deleteFile(filePath) {
+async function deleteFile(filePath) {
     try {
         // Attempt to delete the file
         await unlink(filePath);
@@ -117,13 +116,12 @@ export async function deleteFile(filePath) {
     }
 }
 
-
 /**
  * Uploads a file to the ./data/ directory without encryption or renaming.
  * @param {string} filePath - The path of the file to be uploaded.
  * @throws Error if there is an error uploading the file.
  */
-export async function uploadFile(filePath) {
+async function uploadFile(filePath) {
     try {
         // Move the file to the `./data/` directory without encryption or renaming
         await rename(filePath, `./data/${filePath}`);
@@ -137,7 +135,6 @@ export async function uploadFile(filePath) {
     }
 }
 
-
 /**
  * Returns an array of objects containing file names and their contents from a directory.
  * The method searches for files containing the search term in their names and returns an array
@@ -147,7 +144,7 @@ export async function uploadFile(filePath) {
  * @returns {Promise<Array<{fileName: string, content: string}>>} An array of objects, each containing the file name and content.
  * @throws Error if there is an error reading the directory or any file within it.
  */
-export async function returnFilesByName(dirPath, fileName) {
+async function returnFilesByName(dirPath, fileName) {
     try {
         // Read the directory to get a list of files
         const files = await readdir(dirPath);
@@ -184,7 +181,7 @@ export async function returnFilesByName(dirPath, fileName) {
  * @param {string} fileName - The path and name of the file to compress.
  * @throws {Error} If there is an error reading or writing the file.
  */
-export async function compressFile(fileName) {
+async function compressFile(fileName) {
     try {
         // Create paths for input and output files
         const filePath = path.resolve(fileName);           // Original file path
@@ -207,5 +204,13 @@ export async function compressFile(fileName) {
     }
 }
 
-
-
+module.exports = {
+    readFromFile,
+    writeToFile,
+    readAllFiles,
+    renameFile,
+    deleteFile,
+    uploadFile,
+    returnFilesByName,
+    compressFile
+};

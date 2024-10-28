@@ -97,6 +97,7 @@ function reRenderTable(data) {
                 <button onclick="window.location.href='/view?fileName=${encodedFileName}'" class="action-button">View</button>
                 <button onclick="window.location.href='/edit?fileName=${encodedFileName}'" class="action-button">Edit</button>
                 <button onclick="deleteFile('${escapeHtml(file.fileName)}')" class="action-button">Delete</button>
+                <button onclick="compressFile('<%= file.fileName %>')" class="action-button">Compress File</button>
                 <button onclick="window.location.href='/download?fileName=${encodedFileName}'" class="action-button">Download</button>
             </td>
         `;
